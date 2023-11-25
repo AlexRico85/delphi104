@@ -1,0 +1,920 @@
+object frmSetting: TfrmSetting
+  Left = 0
+  Top = 0
+  Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+  ClientHeight = 399
+  ClientWidth = 676
+  StyleBook = DM_Style.StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object GridPaneMain: TGridPanelLayout
+    Align = Client
+    Padding.Left = 3.000000000000000000
+    Padding.Top = 3.000000000000000000
+    Padding.Right = 3.000000000000000000
+    Padding.Bottom = 3.000000000000000000
+    Size.Width = 676.000000000000000000
+    Size.Height = 399.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    ColumnCollection = <
+      item
+        Value = 100.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = tc_Setting
+        Row = 0
+      end
+      item
+        Column = 0
+        Control = ButtonOK
+        Row = 1
+      end>
+    RowCollection = <
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = Absolute
+        Value = 30.000000000000000000
+      end>
+    object tc_Setting: TTabControl
+      Align = Client
+      Anchors = []
+      Size.Width = 670.000000000000000000
+      Size.Height = 363.000000000000000000
+      Size.PlatformDefault = False
+      TabIndex = 3
+      TabOrder = 0
+      TabPosition = PlatformDefault
+      Sizes = (
+        670s
+        333s
+        670s
+        333s
+        670s
+        333s
+        670s
+        333s)
+      object ti_WebSetting: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 137.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = #1053#1072#1089#1090#1088#1086#1081#1082#1080' WEB'
+        ExplicitSize.cx = 107.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+        object GridPanelLayout1: TGridPanelLayout
+          Align = Top
+          Padding.Left = 2.000000000000000000
+          Padding.Top = 2.000000000000000000
+          Padding.Right = 2.000000000000000000
+          Padding.Bottom = 2.000000000000000000
+          Size.Width = 670.000000000000000000
+          Size.Height = 121.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 26.315789473684210000
+            end
+            item
+              Value = 73.684210526315790000
+            end>
+          ControlCollection = <
+            item
+              Column = -1
+              Row = -1
+            end
+            item
+              Column = 0
+              Control = LabelPortWebServer
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = ePortWebServer
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = LabelLoginWeb
+              Row = 1
+            end
+            item
+              Column = 1
+              Control = sLoginWeb
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = LabelsPassWeb
+              Row = 2
+            end
+            item
+              Column = 1
+              Control = sPassWeb
+              Row = 2
+            end>
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end>
+          object LabelPortWebServer: TLabel
+            Align = Client
+            Size.Width = 172.315795898437500000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1086#1088#1090' Web '#1089#1077#1088#1074#1077#1088#1072
+            TabOrder = 4
+          end
+          object ePortWebServer: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 5
+            Text = '80'
+            Size.Width = 489.684204101562500000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelLoginWeb: TLabel
+            Align = Client
+            Size.Width = 172.315795898437500000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1051#1086#1075#1080#1085' Web '#1089#1077#1088#1074#1077#1088#1072
+            TabOrder = 1
+          end
+          object sLoginWeb: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 2
+            Text = 'Login'
+            Size.Width = 489.684204101562500000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelsPassWeb: TLabel
+            Align = Client
+            Size.Width = 172.315795898437500000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1072#1088#1086#1083#1100' Web '#1089#1077#1088#1074#1077#1088#1072
+            TabOrder = 0
+          end
+          object sPassWeb: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 3
+            Password = True
+            Text = 'Password'
+            Size.Width = 489.684204101562500000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+      end
+      object ti_MySQL: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 130.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = #1057#1077#1088#1074#1077#1088' MySQL'
+        ExplicitSize.cx = 102.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+        object GridPanelServerMYSQL: TGridPanelLayout
+          Align = Client
+          Padding.Left = 2.000000000000000000
+          Padding.Top = 2.000000000000000000
+          Padding.Right = 2.000000000000000000
+          Padding.Bottom = 2.000000000000000000
+          Size.Width = 670.000000000000000000
+          Size.Height = 333.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 33.333333333333340000
+            end
+            item
+              Value = 66.666666666666660000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = LabelAdressMySQL
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = EdAdressMySQL
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = LabelLoginMySQL
+              Row = 1
+            end
+            item
+              Column = 1
+              Control = EdLoginMySQL
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = LabelPassMySQL
+              Row = 2
+            end
+            item
+              Column = 1
+              Control = EdPassMySQL
+              Row = 2
+            end
+            item
+              Column = 0
+              Control = LabelBaseNameMySQL
+              Row = 3
+            end
+            item
+              Column = 1
+              Control = EdBaseNameMySQL
+              Row = 3
+            end
+            item
+              Column = 0
+              Control = LabelPortMySQL
+              Row = 4
+            end
+            item
+              Column = 1
+              Control = EdPortMySQL
+              Row = 4
+            end
+            item
+              Column = 0
+              Control = ButtonTestMySQL
+              Row = 5
+            end
+            item
+              Column = 1
+              Control = LabelResultTestMySQL
+              Row = 5
+            end>
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              Value = 100.000000000000000000
+            end>
+          object LabelAdressMySQL: TLabel
+            Align = Client
+            Size.Width = 219.333328247070300000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1040#1076#1088#1077#1089' '#1089#1077#1088#1074#1077#1088#1072':'
+            TabOrder = 9
+          end
+          object EdAdressMySQL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 14
+            Size.Width = 442.666687011718800000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelLoginMySQL: TLabel
+            Align = Client
+            Size.Width = 219.333328247070300000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1051#1086#1075#1080#1085':'
+            TabOrder = 8
+          end
+          object EdLoginMySQL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 13
+            Size.Width = 442.666687011718800000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelPassMySQL: TLabel
+            Align = Client
+            Size.Width = 219.333328247070300000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1072#1088#1086#1083#1100':'
+            TabOrder = 7
+          end
+          object EdPassMySQL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 12
+            Password = True
+            Size.Width = 442.666687011718800000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelBaseNameMySQL: TLabel
+            Align = Client
+            Size.Width = 219.333328247070300000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1048#1084#1103' '#1073#1072#1079#1099' '#1076#1072#1085#1085#1099#1093':'
+            TabOrder = 6
+          end
+          object EdBaseNameMySQL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 11
+            Size.Width = 442.666687011718800000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelPortMySQL: TLabel
+            Align = Client
+            Size.Width = 219.333328247070300000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1086#1088#1090':'
+            TabOrder = 5
+          end
+          object EdPortMySQL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 10
+            Size.Width = 442.666687011718800000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ButtonTestMySQL: TButton
+            Align = Top
+            Position.X = 2.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 219.333328247070300000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 15
+            Text = #1058#1077#1089#1090' '#1087#1086#1076#1082#1083#1102#1095#1077#1085#1080#1103
+            OnClick = ButtonTestMySQLClick
+          end
+          object LabelResultTestMySQL: TLabel
+            Align = Top
+            Position.X = 225.333328247070300000
+            Position.Y = 152.000000000000000000
+            Size.Width = 442.666687011718800000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1053#1077' '#1090#1077#1089#1090#1080#1088#1086#1074#1072#1083#1086#1089#1100
+            TabOrder = 4
+          end
+        end
+      end
+      object ti_Yandex: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 146.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = #1071#1085#1076#1077#1082#1089'.'#1047#1072#1087#1088#1072#1074#1082#1080
+        ExplicitSize.cx = 146.000000000000000000
+        ExplicitSize.cy = 30.000000000000000000
+        object GPL_YandexSetting: TGridPanelLayout
+          Align = Top
+          Size.Width = 670.000000000000000000
+          Size.Height = 289.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 33.001057236931580000
+            end
+            item
+              Value = 66.998942763068430000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = LabelYandexAdress
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = EdAdressYandex
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = LabelYandexLogin
+              Row = 1
+            end
+            item
+              Column = 1
+              Control = EdLoginYandex
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = LabelYandexPass
+              Row = 2
+            end
+            item
+              Column = 1
+              Control = EdPassYandex
+              Row = 2
+            end
+            item
+              Column = 0
+              Control = LabelYandexBaseName
+              Row = 3
+            end
+            item
+              Column = 1
+              Control = EdBaseNameYandex
+              Row = 3
+            end
+            item
+              Column = 0
+              Control = LabelYandexPort
+              Row = 4
+            end
+            item
+              Column = 1
+              Control = EdPortYandex
+              Row = 4
+            end
+            item
+              Column = 0
+              Control = LabelYandexAPI
+              Row = 5
+            end
+            item
+              Column = 1
+              Control = EdApiYandex
+              Row = 5
+            end
+            item
+              Column = 0
+              Control = ButtonTestYandex
+              Row = 6
+            end
+            item
+              Column = 1
+              Control = LabelResultTestYandex
+              Row = 6
+            end>
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end>
+          object LabelYandexAdress: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1040#1076#1088#1077#1089' '#1089#1077#1088#1074#1077#1088#1072':'
+            TabOrder = 10
+          end
+          object EdAdressYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 17
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelYandexLogin: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1051#1086#1075#1080#1085':'
+            TabOrder = 9
+          end
+          object EdLoginYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 16
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelYandexPass: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1072#1088#1086#1083#1100':'
+            TabOrder = 8
+          end
+          object EdPassYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 14
+            Password = True
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelYandexBaseName: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1048#1084#1103' '#1073#1072#1079#1099' '#1076#1072#1085#1085#1099#1093':'
+            TabOrder = 7
+          end
+          object EdBaseNameYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 13
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelYandexPort: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1086#1088#1090':'
+            TabOrder = 6
+          end
+          object EdPortYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 12
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelYandexAPI: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'API:'
+            TabOrder = 5
+          end
+          object EdApiYandex: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 11
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object ButtonTestYandex: TButton
+            Align = Top
+            Position.Y = 180.000000000000000000
+            Size.Width = 221.107086181640600000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 15
+            Text = #1058#1077#1089#1090' '#1087#1086#1076#1082#1083#1102#1095#1077#1085#1080#1103
+            OnClick = ButtonTestYandexClick
+          end
+          object LabelResultTestYandex: TLabel
+            Align = Top
+            Position.X = 221.107086181640600000
+            Position.Y = 180.000000000000000000
+            Size.Width = 448.892913818359400000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1053#1077' '#1090#1077#1089#1090#1080#1088#1086#1074#1072#1083#1086#1089#1100
+            TabOrder = 4
+          end
+        end
+      end
+      object ti_SMS: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        Size.Width = 130.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = #1054#1090#1087#1088#1072#1074#1082#1072' '#1057#1052#1057
+        object GPLSMS: TGridPanelLayout
+          Align = Top
+          Size.Width = 670.000000000000000000
+          Size.Height = 289.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ColumnCollection = <
+            item
+              Value = 33.001057236931580000
+            end
+            item
+              Value = 66.998942763068430000
+            end>
+          ControlCollection = <
+            item
+              Column = 0
+              Control = lb_ServerSMS
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = ed_ServerSMS
+              Row = 0
+            end
+            item
+              Column = 0
+              Control = lb_LoginSMS
+              Row = 1
+            end
+            item
+              Column = 1
+              Control = ed_LoginSMS
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = lb_PassSMS
+              Row = 2
+            end
+            item
+              Column = 1
+              Control = ed_PassSMS
+              Row = 2
+            end
+            item
+              Column = 1
+              Control = LabelResultTestSMS
+              Row = 5
+            end
+            item
+              Column = 0
+              Control = bt_TestSMS
+              Row = 5
+            end
+            item
+              Column = 0
+              Control = LabelTestSMSPhone
+              Row = 3
+            end
+            item
+              Column = 1
+              Control = EditTestSMSPhone
+              Row = 3
+            end
+            item
+              Column = 0
+              Control = LabelTESTSMS
+              Row = 4
+            end
+            item
+              Column = 1
+              Control = MemoTESTSMS
+              Row = 4
+            end>
+          RowCollection = <
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 90.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 30.000000000000000000
+            end
+            item
+              SizeStyle = Absolute
+              Value = 2.000000000000000000
+            end>
+          object lb_ServerSMS: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1040#1076#1088#1077#1089' '#1089#1077#1088#1074#1077#1088#1072':'
+            TabOrder = 9
+          end
+          object ed_ServerSMS: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 14
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object lb_LoginSMS: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1051#1086#1075#1080#1085':'
+            TabOrder = 8
+          end
+          object ed_LoginSMS: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 13
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object lb_PassSMS: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1055#1072#1088#1086#1083#1100':'
+            TabOrder = 7
+          end
+          object ed_PassSMS: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 11
+            Password = True
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelResultTestSMS: TLabel
+            Align = Top
+            Position.X = 221.107086181640600000
+            Position.Y = 210.000000000000000000
+            Size.Width = 448.892913818359400000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1053#1077' '#1090#1077#1089#1090#1080#1088#1086#1074#1072#1083#1086#1089#1100
+            TabOrder = 4
+          end
+          object bt_TestSMS: TButton
+            Align = Top
+            Position.Y = 210.000000000000000000
+            Size.Width = 221.107086181640600000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 12
+            Text = #1058#1077#1089#1090' '#1086#1090#1087#1088#1072#1074#1082#1080' '#1057#1052#1057
+            OnClick = bt_TestSMSClick
+          end
+          object LabelTestSMSPhone: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1058#1077#1083#1077#1092#1086#1085' '#1058#1045#1057#1058':'
+            TabOrder = 6
+          end
+          object EditTestSMSPhone: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 10
+            Size.Width = 448.892913818359400000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object LabelTESTSMS: TLabel
+            Align = Client
+            Size.Width = 221.107086181640600000
+            Size.Height = 90.000000000000000000
+            Size.PlatformDefault = False
+            Text = #1057#1086#1086#1073#1097#1077#1085#1080#1077' '#1058#1045#1057#1058':'
+            TabOrder = 5
+          end
+          object MemoTESTSMS: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            Align = Client
+            Size.Width = 448.892913818359400000
+            Size.Height = 90.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 15
+            Viewport.Width = 444.900000000000000000
+            Viewport.Height = 86.000000000000000000
+          end
+        end
+      end
+    end
+    object ButtonOK: TButton
+      Align = Right
+      Position.X = 493.000000000000000000
+      Position.Y = 372.000000000000000000
+      Size.Width = 180.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = #1057#1086#1093#1088#1072#1085#1080#1090#1100
+      OnClick = ButtonOKClick
+    end
+  end
+  object FDConnectionTest: TFDConnection
+    Params.Strings = (
+      'Server=sql.ons-tec.ru'
+      'User_Name=u0168896_ons'
+      'Password=syspassoil54'
+      'Database=u0168896_cloud'
+      'DriverID=MySQL')
+    LoginPrompt = False
+    Left = 251
+    Top = 291
+  end
+  object FDPhysMySQLDriverLink: TFDPhysMySQLDriverLink
+    Left = 379
+    Top = 283
+  end
+end

@@ -1,0 +1,4 @@
+rest1s RCDATA "\SQL\rest1s.sql"
+mobile RCDATA "\SQL\mobile.sql"
+yandex RCDATA "\SQL\yandex.sql"
+terminal RCDATA "\SQL\terminal.sql"

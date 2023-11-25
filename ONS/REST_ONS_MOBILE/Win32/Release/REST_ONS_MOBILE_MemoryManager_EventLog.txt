@@ -1,0 +1,84 @@
+
+--------------------------------2023/4/1 11:45:06--------------------------------
+Ѕлок пам€ти был выделен и не освобожден. –азмер: 52
+
+This block was allocated by thread 0x1374, and the stack trace (return addresses) at the time was:
+4074E2 
+40928B 
+4099B2 
+DEFE59 [uLog][uLog][uLog.TLogFile.Create]
+DF11E2 [frmMainUnit][frmMainUnit][frmMainUnit.TfrmMain.StartProgram]
+DF11A0 [frmMainUnit][frmMainUnit][frmMainUnit.TfrmMain.FormShow]
+9BA597 [FMX.Forms][FMX][FMX.Forms.TCommonCustomForm.DoShow]
+9B3C96 [FMX.Forms][FMX][FMX.Forms.TCommonCustomForm.Show]
+41DD4C [FastMM4][FastMM4][FastMM4.DebugFreeMem]
+41DD61 [FastMM4][FastMM4][FastMM4.DebugFreeMem]
+4074FE 
+
+Ѕлок в насто€щее врем€ используетс€ дл€ объекта класса: uLog.TLogFile
+
+¬ыделенный номер стал: 431076
+
+“екущий дамп пам€ти из 256 байт начина€ с адреса 7EB75DF0:
+50 FC DE 00 FF FF FF FF FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 D0 07 00 02 00 00 00 00
+C4 13 DF 00 F0 22 8A 7F 6C 14 DF 00 F0 22 8A 7F 00 00 00 00 31 3C B8 77 00 00 00 00 31 64 B7 7E
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E0 97 06 00 E2 74 40 00 8B 92 40 00 B2 99 40 00
+C3 C0 97 00 67 AF 6F 00 49 AC 0E 77 0E CC 41 00 1D CC 41 00 0F D4 68 00 08 E5 4D 00 35 E7 4D 00
+74 13 00 00 74 13 00 00 FE 74 40 00 A9 92 40 00 FD 99 40 00 28 46 4D 00 9F 93 40 00 E1 B2 6F 00
+61 DD 41 00 9F 93 40 00 23 DB 97 00 3A B1 6F 00 C0 DB 97 00 2C 00 00 00 4C 63 96 00 E2 7D 95 FD
+88 FC F6 00 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80
+80 80 80 80 80 80 80 80 80 80 80 80 1D 82 6A 02 80 80 80 80 80 80 80 80 00 00 00 00 71 66 B7 7E
+P  ь  ё  .  €  €  €  €  €  €  €  €  .  .  .  .  .  .  .  .  .  .  .  .  –  .  .  .  .  .  .  .
+ƒ  .  я  .  р  "  К    l  .  я  .  р  "  К    .  .  .  .  1  <  Є  w  .  .  .  .  1  d  Ј  ~
+.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  а  Ч  .  .  в  t  @  .  Л  Т  @  .  ≤  Щ  @  .
+√  ј  Ч  .  g  ѓ  o  .  I  ђ  .  w  .  ћ  A  .  .  ћ  A  .  .  ‘  h  .  .  е  M  .  5  з  M  .
+t  .  .  .  t  .  .  .  ю  t  @  .  ©  Т  @  .  э  Щ  @  .  (  F  M  .  Я  У  @  .  б  ≤  o  .
+a  Ё  A  .  Я  У  @  .  #  џ  Ч  .  :  ±  o  .  ј  џ  Ч  .  ,  .  .  .  L  c  Ц  .  в  }  Х  э
+И  ь  ц  .  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А
+А  А  А  А  А  А  А  А  А  А  А  А  .  В  j  .  А  А  А  А  А  А  А  А  .  .  .  .  q  f  Ј  ~
+
+--------------------------------2023/4/1 11:45:06--------------------------------
+Ѕлок пам€ти был выделен и не освобожден. –азмер: 36
+
+This block was allocated by thread 0x1374, and the stack trace (return addresses) at the time was:
+4074E2 
+40928B 
+4099B2 
+DF0809 [SessionUnit][SessionUnit][SessionUnit.TSessions.Create]
+DF11E2 [frmMainUnit][frmMainUnit][frmMainUnit.TfrmMain.StartProgram]
+DF11F6 [frmMainUnit][frmMainUnit][frmMainUnit.TfrmMain.StartProgram]
+DF11A0 [frmMainUnit][frmMainUnit][frmMainUnit.TfrmMain.FormShow]
+9BA597 [FMX.Forms][FMX][FMX.Forms.TCommonCustomForm.DoShow]
+9B3C96 [FMX.Forms][FMX][FMX.Forms.TCommonCustomForm.Show]
+41DD4C [FastMM4][FastMM4][FastMM4.DebugFreeMem]
+41DD61 [FastMM4][FastMM4][FastMM4.DebugFreeMem]
+
+Ѕлок в насто€щее врем€ используетс€ дл€ объекта класса: SessionUnit.TSessions
+
+¬ыделенный номер стал: 431077
+
+“екущий дамп пам€ти из 256 байт начина€ с адреса 7EB7E590:
+94 06 DF 00 FF FF FF FF FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 D0 07 00 02 00 00 00 00
+00 00 00 00 4A 55 E6 75 00 00 00 00 71 F1 B7 7E 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+FB 8C 06 00 E2 74 40 00 CF B0 40 00 AF B6 40 00 4D DE 43 00 2D 5F 98 00 24 60 98 00 33 60 98 00
+59 5E 98 00 B9 D9 97 00 79 63 70 00 F8 46 70 00 74 13 00 00 74 13 00 00 FE 74 40 00 EE B1 40 00
+D6 CD 40 00 49 AC 0E 77 6D CC 40 00 E8 CE 40 00 87 E6 40 00 B4 99 5C 00 32 97 5C 00 9F 93 40 00
+13 5E 98 00 22 00 00 00 B0 04 02 00 A8 A0 C5 FD 88 FC F6 00 80 80 80 80 80 80 80 80 80 80 80 80
+80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 57 5F 3A 02 80 80 00 00 00 00 91 EA B7 7E
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 EC E6 03 00 51 75 40 00 CF E3 40 00 85 59 4F 00
+Ф  .  я  .  €  €  €  €  €  €  €  €  .  .  .  .  .  .  .  .  .  .  .  .  –  .  .  .  .  .  .  .
+.  .  .  .  J  U  ж  u  .  .  .  .  q  с  Ј  ~  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+ы  М  .  .  в  t  @  .  ѕ  ∞  @  .  ѓ  ґ  @  .  M  ё  C  .  -  _  Ш  .  $  `  Ш  .  3  `  Ш  .
+Y  ^  Ш  .  є  ў  Ч  .  y  c  p  .  ш  F  p  .  t  .  .  .  t  .  .  .  ю  t  @  .  о  ±  @  .
+÷  Ќ  @  .  I  ђ  .  w  m  ћ  @  .  и  ќ  @  .  З  ж  @  .  і  Щ  \  .  2  Ч  \  .  Я  У  @  .
+.  ^  Ш  .  "  .  .  .  ∞  .  .  .  ®  †  ≈  э  И  ь  ц  .  А  А  А  А  А  А  А  А  А  А  А  А
+А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  А  W  _  :  .  А  А  .  .  .  .  С  к  Ј  ~
+.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  м  ж  .  .  Q  u  @  .  ѕ  г  @  .  Е  Y  O  .
+
+--------------------------------2023/4/1 11:45:06--------------------------------
+¬ этом приложении происход€т утечки пам€ти. ”течки блоков маленького размера (исключа€ ожидаемые утечки зарегистрированные по указателю):
+
+21 - 36 байт: SessionUnit.TSessions x 1
+37 - 52 байт: uLog.TLogFile x 1
+
+Note: ƒетальна€ информаци€ об утечках пам€ти журналируетс€ в текстовый файл в том же каталоге, что и приложение. ƒл€ выключени€ этих проверок утечки пам€ти, уберите определение "EnableMemoryLeakReporting".

@@ -1,0 +1,9 @@
+inherited frmMain_XLgXhdpiTb: TfrmMain_XLgXhdpiTb
+  ClientHeight = 1255
+  ClientWidth = 800
+  DesignerMasterStyle = 0
+  inherited MemoLog: TMemo
+    Viewport.Width = 561.000000000000000000
+    Viewport.Height = 569.000000000000000000
+  end
+end

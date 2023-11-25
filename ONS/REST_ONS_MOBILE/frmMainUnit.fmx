@@ -1,0 +1,94 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = 'REST SERVER'
+  ClientHeight = 578
+  ClientWidth = 774
+  StyleBook = DM_Style.StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object ButtonStart: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Start'
+    OnClick = ButtonStartClick
+  end
+  object ButtonStop: TButton
+    Position.X = 88.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Stop'
+    OnClick = ButtonStopClick
+  end
+  object MemoLog: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    StyledSettings = [Style, FontColor]
+    TextSettings.Font.Family = 'Arial'
+    TextSettings.Font.Size = 10.000000000000000000
+    Position.X = 208.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 561.000000000000000000
+    Size.Height = 569.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 557.000000000000000000
+    Viewport.Height = 565.000000000000000000
+  end
+  object MainMenu: TMainMenu
+    Left = 640
+    Top = 360
+    object MenuItem1: TMenuItem
+      Text = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+      OnClick = MenuItem1Click
+    end
+  end
+  object sCheckBoxEnabledJurnal: TCheckBox
+    IsChecked = True
+    Position.X = 8.000000000000000000
+    Position.Y = 80.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = #1042#1099#1074#1086#1076' '#1078#1091#1088#1085#1072#1083#1072
+  end
+  object LabelSessions: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 136.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = #1040#1082#1090#1080#1074#1085#1099#1077' '#1087#1086#1076#1082#1083#1102#1095#1077#1085#1080#1103
+    TabOrder = 6
+  end
+  object ButtonClearLog: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 104.000000000000000000
+    Size.Width = 153.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = #1054#1095#1080#1089#1090#1080#1090#1100' '#1078#1091#1088#1085#1072#1083
+    OnClick = ButtonClearLogClick
+  end
+  object TimerActivity: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = TimerActivityTimer
+    Left = 568
+    Top = 136
+  end
+end
