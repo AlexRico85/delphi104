@@ -540,6 +540,21 @@ type
 
   TSalesByBonusCardList = array of TSalesByBonusCardRecord;
 
+  TsalesBonusCard = record
+    idCodeCard: string;
+    barcode: string;
+
+    quantityFuel: Double;
+    sumFuel: Double;
+    quantityService: Double;
+    sumService: Double;
+    quantityTobacco: Double;
+    sumTobacco: Double;
+    quantityGoods: Double;
+    sumGoods: Double;
+
+  end;
+
   const
     dirSecurityFiles:string = '\UpLoadSecurity';
     dirReceiptFiles:string = '\ReceiptFiles';

@@ -49,6 +49,7 @@ uses
   function YandexPurchaseListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data: TYandexPurchaseList): string;
   function PaymentMoykaTotalToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TPaymentMoykaTotal): string;
   function PaymentMoykalistToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TPaymentMoykaList): string;
+  function TsalesBonusCardToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCard): string;
   // JSON TO STRUCTURE
 
   Function JSONToTypeQuery(AJson:String):AnsiString;
@@ -1955,6 +1956,48 @@ begin
       end;
       arrayPair.EndArray;
     end;
+
+    Pairs.EndObject;
+    result := StringBuilder.ToString;
+  finally
+    FreeAndNil(Writer);
+    FreeAndNil(StringWriter);
+    FreeAndNil(StringBuilder);
+    FreeAndNil(Builder);
+  end;
+end;
+
+function TsalesBonusCardToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCard): string;
+var
+  Writer: TJsonTextWriter;
+  StringWriter: TStringWriter;
+  StringBuilder: TStringBuilder;
+  Builder: TJSONObjectBuilder;
+  Pairs: TJSONObjectBuilder.TPairs;
+begin
+  result := '';
+  StringBuilder := TStringBuilder.Create;
+  StringWriter := TStringWriter.Create(StringBuilder);
+  Writer := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting := TJsonFormatting.Indented;
+  Builder := TJSONObjectBuilder.Create(Writer);
+  try
+    Pairs:=Builder.BeginObject;
+
+    Pairs.Add('ErrorCode',      ErrorCode)
+        .Add('Result',          DescriptionError)
+        .Add('idCard',          Data.idCodeCard)
+        .Add('codeCard',        Data.barcode)
+        .Add('quantityFuel',    Data.quantityFuel)
+        .Add('sumFuel',         Data.sumFuel)
+        .Add('quantityService', Data.quantityService)
+        .Add('sumService',      Data.sumService)
+        .Add('quantityTobacco', Data.quantityTobacco)
+        .Add('sumTobacco',      Data.sumTobacco)
+        .Add('quantityGoods',   Data.quantityGoods)
+        .Add('sumGoods',        Data.sumGoods);
+
+
 
     Pairs.EndObject;
     result := StringBuilder.ToString;
