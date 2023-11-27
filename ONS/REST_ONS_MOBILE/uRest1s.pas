@@ -64,6 +64,9 @@ type
     function GetReferralCode(const JsonText: string): TJSONObject;
     function updateGetReferralCode(JsonText: String): TJSONObject;
 
+    function updateWrite_Goods(JsonText: String): TJSONObject;
+    function updateWrite_GroupGoods(JsonText: String): TJSONObject;
+
     [TRoleAuth('admin')]
     function updateGetChangesCardList(JsonText: String): TJSONObject;
 
@@ -874,6 +877,74 @@ begin
   end;
 end;
 
+function Rest1s.updateWrite_Goods(JsonText: String): TJSONObject;
+var
+  infoGoods: TInfoGoods;
+  ErrorDescription: AnsiString;
+begin
+
+  Connect;
+  try
+    if JSONToTInfoGoods(JsonText, infoGoods) then
+    begin
+
+       if WriteToMySQL_Goods(infoGoods, ErrorDescription, FDConnection) then
+       begin
+           Result := ResultOkToJSON();
+       end
+       else
+       begin
+          Raise Exception.Create(ErrorDescription);
+       end;
+
+    end else
+
+    begin
+
+      Raise Exception.Create('Ошибка чтения контекста');
+
+    end;
+
+  finally
+    DisConnect;
+  end;
+
+end;
+
+
+function Rest1s.updateWrite_GroupGoods(JsonText: String): TJSONObject;
+var
+  infoGroupGoods: TInfoGroupGoods;
+  ErrorDescription: AnsiString;
+begin
+
+  Connect;
+  try
+    if JSONToTInfoGroupGoods(JsonText, infoGroupGoods) then
+    begin
+
+       if WriteToMySQL_GroupGoods(infoGroupGoods, ErrorDescription, FDConnection) then
+       begin
+           Result := ResultOkToJSON();
+       end
+       else
+       begin
+          Raise Exception.Create(ErrorDescription);
+       end;
+
+    end else
+
+    begin
+
+      Raise Exception.Create('Ошибка чтения контекста');
+
+    end;
+
+  finally
+    DisConnect;
+  end;
+
+end;
 
 
 

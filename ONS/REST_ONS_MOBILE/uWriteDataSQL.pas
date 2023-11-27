@@ -11,6 +11,8 @@ Function WriteToMySQL_ddc_enginecards(dc_enginecards: Tdc_enginecards; var Error
 Function WriteToMySQL_CardPerson(Card: TCard; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function WriteToMySQL_Person(InfoPersone: TInfoPersone; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function WriteToMySQL_PersoneAddInfo(PersoneAddInfo: TPersoneAddInfo; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+Function WriteToMySQL_Goods(InfoGoods: TInfoGoods; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+Function WriteToMySQL_GroupGoods(infoGroupGoods: TInfoGroupGoods; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 
 Function WriteToMySQL_OnlineRegData(OnlineRegData: TOnlineRegData; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function UpdateMySQL_OnlineRegData(OnlineRegData: TOnlineRegData; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
@@ -794,6 +796,149 @@ begin
   end;
 
 
+
+end;
+
+
+Function WriteToMySQL_Goods(InfoGoods: TInfoGoods; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+var
+  ADOQuerySend: TFDQuery;
+  res: string;
+
+begin
+
+  ADOQuerySend := TFDQuery.Create(nil);
+  ADOQuerySend.Connection := ADOMySQLConnection;
+
+  try
+
+    ADOQuerySend.SQL.Text := 'SELECT * FROM rf_goods WHERE guid=''' + IntToStr(InfoGoods.guid) + ''' ';
+
+    try
+      ADOQuerySend.Open;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+    if ADOQuerySend.RecordCount = 0 then
+    begin
+      ADOQuerySend.SQL.Text :=
+        'INSERT INTO `rf_goods`  (`idcode`,`idname`,`article`,`namefull`,`nds`,`unit`,`idgroup`,`is_service`,`guid`,`level`,`is_fuel`,`is_tobacco`) VALUES (' +
+          '''' + InfoGoods.idCode + ''',' +       // idcode
+          '''' + InfoGoods.idName + ''',' +       // idName
+          '''' + InfoGoods.article + ''',' +      // article
+          '''' + InfoGoods.fullName + ''',' +     // fullName
+          '' + IntToStr(InfoGoods.nds) + ',' +    // nds
+          '''' + InfoGoods.unitCode + ''',' +     // unitCode
+          '''' + InfoGoods.idGroup + ''',' +      // idgroup
+          '' + IntToStr(InfoGoods.is_service) + ',' +   // is_service
+          '' + IntToStr(InfoGoods.guid) + ',' +         // guid
+          '' + IntToStr(InfoGoods.level) + ',' +        // level
+          '' + IntToStr(InfoGoods.is_fuel) + ',' +      // is_fuel
+          '' + IntToStr(InfoGoods.is_tobacco) + ')';    // is_tobacco
+    end
+    else
+    begin
+
+      ADOQuerySend.SQL.Text := 'update rf_goods set ' +
+        '`idname` = ''' + InfoGoods.idName    + ''', ' +
+        '`idcode` = ''' + InfoGoods.idCode    + ''', ' +
+        '`article` = ''' + InfoGoods.article  + ''', ' +
+         '`namefull` = ''' + InfoGoods.fullName + ''', ' +
+         '`nds` = ' + IntToStr(InfoGoods.nds) + ', ' +
+         '`unit` = ''' + InfoGoods.unitCode   + ''', ' +
+         '`idgroup` = ''' + InfoGoods.idGroup + ''', ' +
+         '`is_service` = ' + IntToStr(InfoGoods.is_service) + ', ' +
+         '`is_fuel` = ' + IntToStr(InfoGoods.is_fuel)       + ', ' +
+         '`is_tobacco` = ' + IntToStr(InfoGoods.is_tobacco) + ', ' +
+         '`level` = ' + IntToStr(InfoGoods.level)           + ' ' +
+         ' WHERE guid  = ' + IntToStr(InfoGoods.guid) + ' ';
+    end;
+
+    try
+      ADOQuerySend.ExecSQL;
+      result := true;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+  finally
+    ADOQuerySend.Free;
+  end;
+
+end;
+
+Function WriteToMySQL_GroupGoods(infoGroupGoods: TInfoGroupGoods; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+var
+  ADOQuerySend: TFDQuery;
+  res: string;
+
+begin
+
+  ADOQuerySend := TFDQuery.Create(nil);
+  ADOQuerySend.Connection := ADOMySQLConnection;
+
+  try
+
+    ADOQuerySend.SQL.Text := 'SELECT * FROM rfgr_goods WHERE guid=''' + IntToStr(infoGroupGoods.guid) + ''' ';
+
+    try
+      ADOQuerySend.Open;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+    if ADOQuerySend.RecordCount = 0 then
+    begin
+      ADOQuerySend.SQL.Text :=
+        'INSERT INTO `rfgr_goods`  (`idcode`,`idname`,`idgroup`,`guid`,`level`) VALUES (' +
+          '''' + infoGroupGoods.idCode + ''',' +       // idcode
+          '''' + infoGroupGoods.idName + ''',' +       // idName
+          '''' + infoGroupGoods.idGroup + ''',' +      // idgroup
+          '' + IntToStr(infoGroupGoods.guid) + ',' +         // guid
+          '' + IntToStr(infoGroupGoods.level) + ')';        // level
+    end
+    else
+    begin
+
+      ADOQuerySend.SQL.Text := 'update rfgr_goods set ' +
+        '`idname` = ''' + infoGroupGoods.idName    + ''', ' +
+        '`idcode` = ''' + infoGroupGoods.idCode    + ''', ' +
+         '`idgroup` = ''' + infoGroupGoods.idGroup + ''', ' +
+         '`level` = ' + IntToStr(infoGroupGoods.level)           + ' ' +
+         ' WHERE guid  = ' + IntToStr(infoGroupGoods.guid) + ' ';
+    end;
+
+    try
+      ADOQuerySend.ExecSQL;
+      result := true;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+  finally
+    ADOQuerySend.Free;
+  end;
 
 end;
 

@@ -62,6 +62,8 @@ uses
   Function JSONToTYandexPurchaseAnswer(AJson:String; var YandexPurchaseAnswer :TYandexPurchaseAnswer):boolean;
   Function JSONToTdc_enginefixcards_moyka(AJson:String; var dc_enginefixcards_moyka :Tdc_enginefixcards_moyka):boolean;
   Function JSONToTdc_enginedebit_moyka(AJson:String; var dc_enginedebit_moyka :Tdc_enginedebit_moyka):boolean;
+  Function JSONToTInfoGoods(AJson:String; var infoGoods :TInfoGoods):boolean;
+  Function JSONToTInfoGroupGoods(AJson:String; var infoGroupGoods :TInfoGroupGoods):boolean;
 
 
 
@@ -1964,6 +1966,108 @@ begin
   end;
 end;
 
+Function JSONToTInfoGoods(AJson:String; var infoGoods :TInfoGoods):boolean;
+var
+  Json: TJSONIterator;
 
+  TextReader: TStringReader;
+  Reader: TJsonTextReader;
+begin
+
+  TextReader:=TStringReader.Create(AJson);
+  Reader:=TJsonTextReader.Create(TextReader);
+  Json:=TJSONIterator.Create(Reader);
+
+  try
+    while JSON.Next do
+    begin
+       if JSON.Key='idcode' then
+         infoGoods.idCode := Json.AsString;
+
+       if JSON.Key='article' then
+         infoGoods.article  := Json.AsString;
+
+       if JSON.Key='name' then
+         infoGoods.idName := Json.AsString;
+
+       if JSON.Key='namefull' then
+         infoGoods.fullName := Json.AsString;
+
+       if JSON.Key='unit' then
+         infoGoods.unitCode := Json.AsString;
+
+       if JSON.Key='nds' then
+         infoGoods.nds := Json.AsInteger;
+
+       if JSON.Key='idgroup' then
+          infoGoods.idGroup := Json.AsString;
+
+       if JSON.Key='level' then
+          infoGoods.level := Json.AsInteger;
+
+       if JSON.Key='is_service' then
+          infoGoods.is_service := Json.AsInteger;
+
+       if JSON.Key='is_fuel' then
+          infoGoods.is_fuel := Json.AsInteger;
+
+       if JSON.Key='is_tobacco' then
+          infoGoods.is_tobacco := Json.AsInteger;
+
+       if JSON.Key='guid' then
+          infoGoods.guid := Json.AsInteger;
+
+    end;
+
+  finally
+    Json.Free;
+    Reader.Free;
+    TextReader.Free;
+  end;
+
+  result := true;
+end;
+
+
+Function JSONToTInfoGroupGoods(AJson:String; var infoGroupGoods :TInfoGroupGoods):boolean;
+var
+  Json: TJSONIterator;
+
+  TextReader: TStringReader;
+  Reader: TJsonTextReader;
+begin
+
+  TextReader:=TStringReader.Create(AJson);
+  Reader:=TJsonTextReader.Create(TextReader);
+  Json:=TJSONIterator.Create(Reader);
+
+  try
+    while JSON.Next do
+    begin
+       if JSON.Key='idcode' then
+         infoGroupGoods.idCode := Json.AsString;
+
+       if JSON.Key='name' then
+         infoGroupGoods.idName := Json.AsString;
+
+       if JSON.Key='idgroup' then
+          infoGroupGoods.idGroup := Json.AsString;
+
+       if JSON.Key='level' then
+          infoGroupGoods.level := Json.AsInteger;
+
+       if JSON.Key='guid' then
+          infoGroupGoods.guid := Json.AsInteger;
+
+    end;
+
+  finally
+    Json.Free;
+    Reader.Free;
+    TextReader.Free;
+  end;
+
+  result := true;
+end;
 
 end.

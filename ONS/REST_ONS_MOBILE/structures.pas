@@ -341,6 +341,29 @@ type
 
   end;
 
+  TInfoGoods = record
+    idCode:string;
+    idGroup:string;
+    idName:string;
+    fullName:string;
+    article:string;
+    unitCode:string;
+    nds:integer;
+    level:integer;
+    is_service:integer;
+    is_fuel:integer;
+    is_tobacco:integer;
+    guid:integer;
+  end;
+
+  TInfoGroupGoods = record
+    idCode:string;
+    idGroup:string;
+    idName:string;
+    level:integer;
+    guid:integer;
+  end;
+
   // пюгнбне мювхякемхе анмсянб лнийю
 
   Ttbdc_enginefixcards_moyka_Record = record
