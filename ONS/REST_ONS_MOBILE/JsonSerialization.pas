@@ -50,6 +50,7 @@ uses
   function PaymentMoykaTotalToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TPaymentMoykaTotal): string;
   function PaymentMoykalistToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TPaymentMoykaList): string;
   function TsalesBonusCardToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCard): string;
+  function TsalesBonusCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCardList): string;
   // JSON TO STRUCTURE
 
   Function JSONToTypeQuery(AJson:String):AnsiString;
@@ -1998,6 +1999,63 @@ begin
         .Add('sumGoods',        Data.sumGoods);
 
 
+
+    Pairs.EndObject;
+    result := StringBuilder.ToString;
+  finally
+    FreeAndNil(Writer);
+    FreeAndNil(StringWriter);
+    FreeAndNil(StringBuilder);
+    FreeAndNil(Builder);
+  end;
+end;
+
+
+function TsalesBonusCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCardList): string;
+var
+  Writer: TJsonTextWriter;
+  StringWriter: TStringWriter;
+  StringBuilder: TStringBuilder;
+  Builder: TJSONObjectBuilder;
+  Pairs: TJSONObjectBuilder.TPairs;
+  arrayPair:TJSONObjectBuilder.TElements;
+  I:integer;
+  FormatSettings: TFormatSettings;
+begin
+  result := '';
+  FormatSettings.DecimalSeparator := '.';
+  StringBuilder := TStringBuilder.Create;
+  StringWriter := TStringWriter.Create(StringBuilder);
+  Writer := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting := TJsonFormatting.Indented;
+  Builder := TJSONObjectBuilder.Create(Writer);
+  try
+    Pairs:=Builder.BeginObject;
+
+    Pairs.Add('ErrorCode',ErrorCode);
+    Pairs.Add('Result', DescriptionError);
+    if Data<>nil then
+    begin
+      arrayPair := Pairs.BeginArray('Data');
+      for I := Low(Data) to High(Data) do
+      begin
+
+         arrayPair.BeginObject
+        .Add('idCard',          Data[I].idCodeCard)
+        .Add('codeCard',        Data[I].barcode)
+        .Add('quantityFuel',    Data[I].quantityFuel)
+        .Add('sumFuel',         Data[I].sumFuel)
+        .Add('quantityService', Data[I].quantityService)
+        .Add('sumService',      Data[I].sumService)
+        .Add('quantityTobacco', Data[I].quantityTobacco)
+        .Add('sumTobacco',      Data[I].sumTobacco)
+        .Add('quantityGoods',   Data[I].quantityGoods)
+        .Add('sumGoods',        Data[I].sumGoods)
+        .EndObject;
+
+      end;
+      arrayPair.EndArray;
+    end;
 
     Pairs.EndObject;
     result := StringBuilder.ToString;

@@ -28,6 +28,8 @@ type
     function updateGetLastSales10Minutes(JsonText: String): TJSONObject;
     function updateGetSalesForLastMonth(JsonText: String): TJSONObject;
     function updateGetSalesForCurrentYear(JsonText: String): TJSONObject;
+    function updateGetSalesForCurrentWeek(JsonText: String): TJSONObject;
+    function updateStatisticSalesOfCardsForWeek(JsonText: String): TJSONObject;
     [TRoleAuth('admin')]
     function updateUpdate_person_addInfo(JsonText: String): TJSONObject;
   end;
@@ -1496,6 +1498,222 @@ begin
 
   Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
 end;
+
+
+function Mobile.updateGetSalesForCurrentWeek(JsonText: String): TJSONObject;
+var
+  QueryGetParamCard:TFDQuery;
+  QueryGetSales:TFDQuery;
+
+  JSON:TJSONObject;
+
+  JSonVaue:TJSONValue;
+  ParamIdCard, ParamCodeCard :string;
+  salesBonusCard: TsalesBonusCard;
+  resultText : string;
+begin
+
+  ParamIdCard := '';
+  ParamCodeCard := '';
+
+  Connect;
+
+  QueryGetParamCard := TFDQuery.Create(nil);
+  QueryGetParamCard.Connection :=  FDConnection;
+  QueryGetParamCard.SQL.Text := SqlList['GetParamCardMobile'];
+
+  QueryGetSales := TFDQuery.Create(nil);
+  QueryGetSales.Connection :=  FDConnection;
+  QueryGetSales.SQL.Text := SqlList['SalesForCurrentWeek'];
+
+
+  JSON:=TJSONObject.ParseJSONValue(JsonText, False, True) as TJSONObject;
+
+  try
+
+
+
+    JSonVaue := Json.FindValue('codeCard');
+    if JSonVaue <> nil then
+    begin
+      ParamCodeCard := JSonVaue.Value;
+    end;
+
+    if (ParamCodeCard = '')  then
+    begin
+      Raise Exception.Create('Не верные параметры запроса');
+    end;
+
+    if ParamIdCard='' then
+       ParamIdCard := '999999999999999999999999999999';
+
+
+    QueryGetParamCard.Active := False;
+    QueryGetParamCard.Params.FindParam('CODECARD').Value := ParamCodeCard;
+    QueryGetParamCard.Params.FindParam('IDCODE').Value := ParamIdCard;
+
+    try
+      QueryGetParamCard.Open;
+    except
+      on E: Exception do
+      begin
+        Raise Exception.Create('Ошибка выполнения запроса');
+      end;
+    end;
+
+    QueryGetParamCard.Last;
+
+    if QueryGetParamCard.RecordCount=0 then
+      Raise Exception.Create('Карта не найдена ');
+
+
+    ParamCodeCard :=  QueryGetParamCard.FieldByName('codecard').AsString;
+    ParamIdCard :=  QueryGetParamCard.FieldByName('idcard').AsString;
+
+    salesBonusCard.idCodeCard := ParamIdCard;
+    salesBonusCard.barcode := ParamCodeCard;
+
+    QueryGetSales.Active := False;
+    QueryGetSales.Params.FindParam('IDCARD').Value := ParamIdCard;
+
+
+    try
+      QueryGetSales.Open;
+    except
+      Raise Exception.Create('Ошибка выполнения запроса');
+    end;
+
+    QueryGetSales.Last;
+
+    if QueryGetSales.RecordCount=0 then
+    begin
+      Raise Exception.Create('Нет данных');
+    end;
+
+    QueryGetSales.First;
+
+    with   QueryGetSales do
+    begin
+
+      salesBonusCard.quantityFuel     := RoundTo(FieldByName('quantityFuel').AsFloat, -2);
+      salesBonusCard.sumFuel          := RoundTo(FieldByName('sumFuel').AsFloat, -2);
+      salesBonusCard.quantityService  := RoundTo(FieldByName('quantityService').AsFloat, -2);
+      salesBonusCard.sumService       := RoundTo(FieldByName('sumService').AsFloat, -2);
+      salesBonusCard.quantityTobacco  := RoundTo(FieldByName('quantityTobacco').AsFloat, -2);
+      salesBonusCard.sumTobacco       := RoundTo(FieldByName('sumTobacco').AsFloat, -2);
+      salesBonusCard.quantityGoods    := RoundTo(FieldByName('quantityGoods').AsFloat, -2);
+      salesBonusCard.sumGoods         := RoundTo(FieldByName('sumGoods').AsFloat, -2);
+
+    end;
+
+
+
+
+
+  finally
+    FreeAndNil(QueryGetParamCard);
+    FreeAndNil(QueryGetSales);
+    DisConnect;
+    FreeAndNil(JSON);
+  end;
+  resultText := TsalesBonusCardToJSON(0, 'OK', salesBonusCard);
+
+  Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
+end;
+
+
+function Mobile.updateStatisticSalesOfCardsForWeek(JsonText: String): TJSONObject;
+var
+  QueryGetSales:TFDQuery;
+
+  JSON:TJSONObject;
+
+  JSonVaue:TJSONValue;
+  ParamConditionWhere :string;
+  salesBonusCardList: TsalesBonusCardList;
+  SQLText:string;
+  resultText : string;
+  N:integer;
+begin
+
+  ParamConditionWhere := '';
+  N := 0;
+
+  Connect;
+
+
+  JSON:=TJSONObject.ParseJSONValue(JsonText, False, True) as TJSONObject;
+
+  try
+
+
+
+    JSonVaue := Json.FindValue('conditionWhere');
+    if JSonVaue <> nil then
+    begin
+      ParamConditionWhere := JSonVaue.Value;
+    end;
+
+
+    SQLText := SqlList['StatisticSalesOfCardsForWeek'];
+    SQLText := StringReplace(SQLText, '#conditionWhere', ParamConditionWhere, [rfReplaceAll, rfIgnoreCase]);
+
+    QueryGetSales := TFDQuery.Create(nil);
+    QueryGetSales.Connection :=  FDConnection;
+    QueryGetSales.SQL.Text := SQLText;
+    QueryGetSales.Active := False;
+
+
+    try
+      QueryGetSales.Open;
+    except
+      Raise Exception.Create('Ошибка выполнения запроса');
+    end;
+
+    QueryGetSales.Last;
+
+    if QueryGetSales.RecordCount=0 then
+    begin
+      Raise Exception.Create('Нет данных');
+    end;
+
+    SetLength(salesBonusCardList, QueryGetSales.RecordCount);
+
+    QueryGetSales.First;
+    while not QueryGetSales.Eof do
+    begin
+
+        with   QueryGetSales do
+        begin
+          salesBonusCardList[N].idCodeCard      := FieldByName('idCard').AsString;
+          salesBonusCardList[N].barcode         := FieldByName('codeCard').AsString;
+          salesBonusCardList[N].quantityFuel    := RoundTo(FieldByName('quantityFuel').AsFloat, -2);
+          salesBonusCardList[N].sumFuel         := RoundTo(FieldByName('sumFuel').AsFloat, -2);
+          salesBonusCardList[N].quantityService := RoundTo(FieldByName('quantityService').AsFloat, -2);
+          salesBonusCardList[N].sumService      := RoundTo(FieldByName('sumService').AsFloat, -2);
+          salesBonusCardList[N].quantityTobacco := RoundTo(FieldByName('quantityTobacco').AsFloat, -2);
+          salesBonusCardList[N].sumTobacco      := RoundTo(FieldByName('sumTobacco').AsFloat, -2);
+          salesBonusCardList[N].quantityGoods   := RoundTo(FieldByName('quantityGoods').AsFloat, -2);
+          salesBonusCardList[N].sumGoods        := RoundTo(FieldByName('sumGoods').AsFloat, -2);
+
+        end;
+      N := N + 1;
+      QueryGetSales.Next;
+    end;
+
+
+
+  finally
+    FreeAndNil(QueryGetSales);
+    DisConnect;
+    FreeAndNil(JSON);
+  end;
+  resultText := TsalesBonusCardListToJSON(0, 'OK', salesBonusCardList);
+
+  Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
+end;
+
+
 
 Procedure Mobile.Connect();
 

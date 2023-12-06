@@ -555,6 +555,8 @@ type
 
   end;
 
+ TsalesBonusCardList = array of TsalesBonusCard;
+
   const
     dirSecurityFiles:string = '\UpLoadSecurity';
     dirReceiptFiles:string = '\ReceiptFiles';

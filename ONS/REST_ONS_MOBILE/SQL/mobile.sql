@@ -483,3 +483,109 @@ card
 
 
 //END
+
+//SQL SalesForCurrentWeek
+SELECT
+card,
+SUM(IF(is_fuel = 1, quantity, 0)) as quantityFuel,
+SUM(IF(is_fuel = 1, summa, 0)) as sumFuel,
+SUM(IF(is_service = 1, quantity, 0)) as quantityService,
+SUM(IF(is_service = 1, summa, 0)) as sumService,
+SUM(IF(is_tobacco = 1, quantity, 0)) as quantityTobacco,
+SUM(IF(is_tobacco = 1, summa, 0)) as sumTobacco,
+SUM(IF(is_tobacco = 0 and is_fuel = 0 and is_service = 0, quantity, 0)) as quantityGoods,
+SUM(IF(is_tobacco = 0 and is_fuel = 0 and is_service = 0, summa, 0)) as sumGoods
+
+FROM (
+
+SELECT
+Sum(tbdc_enginecardnac.quantity) as quantity,
+Sum(tbdc_enginecardnac.sum) as summa,
+dc_enginecards.card as card,
+tbdc_enginecardnac.goods,
+rf_goods.is_fuel as is_fuel,
+rf_goods.is_service as is_service,
+rf_goods.is_tobacco as is_tobacco
+
+FROM
+dc_enginecards
+LEFT JOIN tbdc_enginecardnac ON tbdc_enginecardnac.guiddoc = dc_enginecards.guid
+LEFT JOIN rf_goods ON rf_goods.idcode = tbdc_enginecardnac.goods
+
+WHERE
+dc_enginecards.card = :idCard
+AND dc_enginecards.iddate > DATE_ADD(CURRENT_DATE(), INTERVAL(1-DAYOFWEEK(CURRENT_DATE())) DAY)
+AND dc_enginecards.iddate <= NOW()
+
+GROUP BY
+dc_enginecards.card,
+rf_goods.namefull
+
+) as tableTrade
+
+GROUP BY
+card
+
+//END
+
+//SQL StatisticSalesOfCardsForWeek
+SELECT
+collapsedTable.idCard,
+collapsedTable.codeCard,
+collapsedTable.quantityFuel,
+collapsedTable.sumFuel,
+collapsedTable.quantityService,
+collapsedTable.sumService,
+collapsedTable.quantityTobacco,
+collapsedTable.sumTobacco,
+collapsedTable.quantityGoods,
+collapsedTable.sumGoods
+
+FROM
+(
+SELECT
+tableTrade.card as idCard,
+cartlist.codcart as codeCard,
+SUM(IF(is_fuel = 1, quantity, 0)) as quantityFuel,
+SUM(IF(is_fuel = 1, summa, 0)) as sumFuel,
+SUM(IF(is_service = 1, quantity, 0)) as quantityService,
+SUM(IF(is_service = 1, summa, 0)) as sumService,
+SUM(IF(is_tobacco = 1, quantity, 0)) as quantityTobacco,
+SUM(IF(is_tobacco = 1, summa, 0)) as sumTobacco,
+SUM(IF(is_tobacco = 0 and is_fuel = 0 and is_service = 0, quantity, 0)) as quantityGoods,
+SUM(IF(is_tobacco = 0 and is_fuel = 0 and is_service = 0, summa, 0)) as sumGoods
+
+FROM (
+
+SELECT
+Sum(tbdc_enginecardnac.quantity) as quantity,
+Sum(tbdc_enginecardnac.sum) as summa,
+dc_enginecards.card as card,
+tbdc_enginecardnac.goods,
+rf_goods.is_fuel as is_fuel,
+rf_goods.is_service as is_service,
+rf_goods.is_tobacco as is_tobacco
+
+FROM
+dc_enginecards
+LEFT JOIN tbdc_enginecardnac ON tbdc_enginecardnac.guiddoc = dc_enginecards.guid
+LEFT JOIN rf_goods ON rf_goods.idcode = tbdc_enginecardnac.goods
+
+WHERE
+dc_enginecards.iddate > DATE_ADD(CURRENT_DATE(), INTERVAL(1-DAYOFWEEK(CURRENT_DATE())) DAY)
+AND dc_enginecards.iddate <= NOW()
+
+GROUP BY
+dc_enginecards.card,
+rf_goods.namefull
+
+) as tableTrade
+
+LEFT JOIN cartlist ON cartlist.idcode = tableTrade.card
+
+GROUP BY
+card ) as collapsedTable
+
+#conditionWhere
+
+//END
