@@ -44,6 +44,9 @@ type
     function Write_dc_enginefixcards_moyka(JsonText: String): TJSONObject;
     function updateWrite_dc_enginefixcards_moyka(JsonText: String): TJSONObject;
 
+    function Write_dc_enginefixcards(JsonText: String): TJSONObject;
+    function updateWrite_dc_enginefixcards(JsonText: String): TJSONObject;
+
     function Write_dc_enginedebit_moyka(JsonText: String): TJSONObject;
     function updateWrite_dc_enginedebit_moyka(JsonText: String): TJSONObject;
 
@@ -142,6 +145,11 @@ begin
 end;
 
 function Rest1s.Write_dc_enginefixcards_moyka(JsonText: String): TJSONObject;
+begin
+  Result := DescriptionErrorToJSON(2, 'use POST query');
+end;
+
+function Rest1s.Write_dc_enginefixcards(JsonText: String): TJSONObject;
 begin
   Result := DescriptionErrorToJSON(2, 'use POST query');
 end;
@@ -737,6 +745,42 @@ begin
   end;
 
 end;
+
+
+function Rest1s.updateWrite_dc_enginefixcards( JsonText: String): TJSONObject;
+var
+  dc_enginefixcards: Tdc_enginefixcards;
+  ErrorDescription: AnsiString;
+begin
+
+  JsonText := IdURI.TIdURI.URLDecode(JsonText);
+
+  Connect;
+  try
+    if JSONToTdc_enginefixcards(JsonText, dc_enginefixcards) then
+    begin
+
+       if WriteToMySQL_dc_enginefixcards(dc_enginefixcards, ErrorDescription, FDConnection) then
+       begin
+           Result := ResultOkToJSON();
+       end
+       else
+       begin
+          Raise Exception.Create(ErrorDescription);
+       end;
+
+    end else
+
+    begin
+      Raise Exception.Create('Ошибка чтения контекста');
+    end;
+
+  finally
+      DisConnect;
+  end;
+
+end;
+
 
 function Rest1s.updateWrite_dc_enginedebit_moyka( JsonText: String): TJSONObject;
 var

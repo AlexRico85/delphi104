@@ -23,6 +23,7 @@ Function WriteMySQL_yandex_transactions_bonus(YandexPurchase: TYandexPurchase; v
 Function UpdateMySQL_YandexPurchaseAnswer(YandexPurchaseAnswer: TYandexPurchaseAnswer; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 
 Function WriteToMySQL_dc_enginefixcards_moyka(dc_enginefixcards_moyka: Tdc_enginefixcards_moyka; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+Function WriteToMySQL_dc_enginefixcards(dc_enginefixcards: Tdc_enginefixcards; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function WriteToMySQL_dc_enginedebit_moyka(dc_enginedebit_moyka: Tdc_enginedebit_moyka; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 
 implementation
@@ -1512,6 +1513,154 @@ begin
    result := true;
 
 end;
+
+
+Function WriteToMySQL_dc_enginefixcards(dc_enginefixcards: Tdc_enginefixcards; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+var
+  ADOQuerySend: TFDQuery;
+  curGuid, Engine :string;
+  I: Integer;
+begin
+  LogFile.WriteLog('Обработка dc_enginefixcards ' + dc_enginefixcards.guiddocInteger);
+
+  if dc_enginefixcards.Registr then Engine := '1' Else  Engine := '0';
+
+
+  ADOQuerySend := TFDQuery.Create(nil);
+  ADOQuerySend.Connection := ADOMySQLConnection;
+   try
+
+      // Шапка документа
+      ADOQuerySend.SQL.Text := 'SELECT * FROM dc_enginefixcards WHERE guid=''' + dc_enginefixcards.guiddoc + '''  or guid=''' + dc_enginefixcards.guiddocInteger + ''' ';
+
+      try
+        ADOQuerySend.Open;
+      except
+        on E: Exception do
+        begin
+          ErrorDescription := E.Message;
+          exit;
+        end;
+      end;
+
+      if ADOQuerySend.RecordCount = 0 then
+      begin
+          ADOQuerySend.SQL.Text := 'INSERT INTO `dc_enginefixcards`  (`datecreate`, `idcode`,`iddate`,`guid`,`towrite`, `engine`, `comment`) VALUES (' +
+          '''' + FormatDateTime('yyyy-mm-dd hh:mm:ss', Now()) + ''', ' +
+          '''' + dc_enginefixcards.idcode + ''',' +
+          '''' + dc_enginefixcards.iddate + ''',' +
+          '''' + dc_enginefixcards.guiddocInteger + ''',' +
+          '''' + '1' + ''',' +
+          '''' + Engine + ''',' +
+          '''' + dc_enginefixcards.comment + ''')';
+
+          curGuid :=  dc_enginefixcards.guiddocInteger;
+
+      end
+      else
+      begin
+          ADOQuerySend.First;
+          curGuid := ADOQuerySend.FieldByName('guid').AsString;
+
+          ADOQuerySend.SQL.Text := 'update dc_enginefixcards set ' +
+          '`guid` = '''       + dc_enginefixcards.guiddocInteger +''', ' +
+          '`iddate` = '''     + dc_enginefixcards.iddate +''', ' +
+          '`idcode` = '''     + dc_enginefixcards.idcode + ''', ' +
+          '`towrite` = '''     + '1' + ''', ' +
+          '`engine` = '''     + Engine + ''', ' +
+          '`comment` = '''     + dc_enginefixcards.comment + ''' ' +
+          ' WHERE guid  = ''' + dc_enginefixcards.guiddoc + ''' or guid=''' + dc_enginefixcards.guiddocInteger + ''' ';
+      end;
+
+      try
+        ADOQuerySend.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ErrorDescription := E.Message;
+          exit;
+        end;
+      end;
+
+
+      // Очистка регистров, команда проведения отдельным запросом
+      ADOQuerySend.SQL.Text := 'DELETE FROM `tddc_enginefixcards` WHERE guiddoc=''' + curGuid + ''' ';
+      try
+        ADOQuerySend.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ErrorDescription := E.Message;
+          exit;
+        end;
+      end;
+
+
+      ADOQuerySend.SQL.Text := 'DELETE FROM `rn_cardsnakp` WHERE guiddoc=''' + curGuid + ''' ';
+      try
+        ADOQuerySend.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ErrorDescription := E.Message;
+          exit;
+        end;
+      end;
+
+      curGuid := dc_enginefixcards.guiddocInteger;
+
+      if dc_enginefixcards.Registr then
+      begin
+          for I := Low(dc_enginefixcards.tddc_enginefixcards) to High(dc_enginefixcards.tddc_enginefixcards) do
+          begin
+              with dc_enginefixcards.tddc_enginefixcards[I] do
+              begin
+
+                ADOQuerySend.SQL.Text := 'INSERT INTO `tddc_enginefixcards`  (`cart`,`bonus`,`iddoc`,`guiddoc`) VALUES (' +
+                '''' + card + ''',' +
+                '' + DecToch(FloatToStr(bonus)) + ',' +
+                '''' + iddoc + ''',' +
+                '''' + curGuid + ''')';
+                try
+                  ADOQuerySend.ExecSQL;
+                except
+                  on E: Exception do
+                  begin
+                    ErrorDescription := E.Message;
+                    exit;
+                  end;
+                end;
+
+                 ADOQuerySend.SQL.Text := 'INSERT INTO `rn_cardsnakp`  (`cart`,`sum`,`guiddoc`, `date`) VALUES (' +
+                '''' + card + ''',' +
+                '' + DecToch(FloatToStr(bonus))  + ',' +
+                '''' + curGuid + ''','+
+                '''' + dateof + ''')';
+
+                try
+                  ADOQuerySend.ExecSQL;
+                except
+                  on E: Exception do
+                  begin
+                    ErrorDescription := E.Message;
+                    exit;
+                  end;
+                end;
+
+              end;
+          end;
+
+      end;
+
+
+   finally
+     ADOQuerySend.Free;
+   end;
+
+   result := true;
+
+end;
+
 
 
 Function WriteToMySQL_dc_enginedebit_moyka(dc_enginedebit_moyka: Tdc_enginedebit_moyka; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;

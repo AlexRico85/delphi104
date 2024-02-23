@@ -364,6 +364,33 @@ type
     guid:integer;
   end;
 
+   // пюгнбне мювхякемхе анмсянб
+
+  Ttbdc_enginefixcards_Record = record
+    guiddoc:string;
+    guiddocInteger:string;
+    card:string;
+    bonus:Double;
+    dateOf:string;
+    iddoc    :string;
+  end;
+
+  Ttddc_enginefixcards = array of Ttbdc_enginefixcards_Record;
+
+  Tdc_enginefixcards = record
+    Registr   :Boolean;
+    guiddoc   :string;
+    guiddocInteger :string;
+    uniid:string;
+    idcode    :string;
+    iddate    :string;
+    comment   :AnsiString;
+
+    count_tddc_enginefixcards : Integer;
+    tddc_enginefixcards :Ttddc_enginefixcards;
+
+  end;
+
   // пюгнбне мювхякемхе анмсянб лнийю
 
   Ttbdc_enginefixcards_moyka_Record = record

@@ -64,6 +64,7 @@ uses
   Function JSONToTYandexPurchase(AJson:String; var YandexPurchase :TYandexPurchase):boolean;
   Function JSONToTYandexPurchaseAnswer(AJson:String; var YandexPurchaseAnswer :TYandexPurchaseAnswer):boolean;
   Function JSONToTdc_enginefixcards_moyka(AJson:String; var dc_enginefixcards_moyka :Tdc_enginefixcards_moyka):boolean;
+  Function JSONToTdc_enginefixcards(AJson:String; var dc_enginefixcards :Tdc_enginefixcards):boolean;
   Function JSONToTdc_enginedebit_moyka(AJson:String; var dc_enginedebit_moyka :Tdc_enginedebit_moyka):boolean;
   Function JSONToTInfoGoods(AJson:String; var infoGoods :TInfoGoods):boolean;
   Function JSONToTInfoGroupGoods(AJson:String; var infoGroupGoods :TInfoGroupGoods):boolean;
@@ -915,6 +916,99 @@ begin
   result := true;
 
 end;
+
+
+Function JSONToTdc_enginefixcards(AJson:String; var dc_enginefixcards :Tdc_enginefixcards):boolean;
+var
+  Json: TJSONIterator;
+
+  TextReader: TStringReader;
+  Reader: TJsonTextReader;
+
+  idtddc_enginefixcards:integer;
+begin
+
+  TextReader:=TStringReader.Create(AJson);
+  Reader:=TJsonTextReader.Create(TextReader);
+  Json:=TJSONIterator.Create(Reader);
+  try
+    while JSON.Next do
+    begin
+       if JSON.Key='guid' then
+         dc_enginefixcards.guiddoc := Json.AsString;
+
+       if JSON.Key='Registr' then
+         dc_enginefixcards.Registr  := IntToBool(Json.AsInteger);
+
+       if JSON.Key='guidInteger' then
+         dc_enginefixcards.guiddocInteger := Json.AsString;
+
+       if JSON.Key='idcode' then
+          dc_enginefixcards.idcode := Json.AsString;
+
+       if JSON.Key='iddate' then
+          dc_enginefixcards.iddate := Json.AsString;
+
+       if JSON.Key='comment' then
+          dc_enginefixcards.comment := Json.AsString;
+
+       if JSON.Key='count_tddc_enginefixcards' then
+          dc_enginefixcards.count_tddc_enginefixcards := Json.AsInteger;
+
+
+
+       if JSON.Key='tddc_enginefixcards' then
+       begin
+
+          SetLength(dc_enginefixcards.tddc_enginefixcards, dc_enginefixcards.count_tddc_enginefixcards);
+          idtddc_enginefixcards := 0;
+          if Json.Recurse then
+          begin
+             while JSON.Next do
+             begin
+                if Json.Recurse then
+                begin
+
+                   while JSON.Next do
+                   begin
+                     if JSON.Key='guiddoc' then
+                        dc_enginefixcards.tddc_enginefixcards[idtddc_enginefixcards].guiddoc := Json.AsString;
+
+                     if JSON.Key='guiddocInteger' then
+                        dc_enginefixcards.tddc_enginefixcards[idtddc_enginefixcards].guiddocInteger := Json.AsString;
+
+                     if JSON.Key='card' then
+                        dc_enginefixcards.tddc_enginefixcards[idtddc_enginefixcards].card := Json.AsString;
+
+                     if JSON.Key='bonus' then
+                        dc_enginefixcards.tddc_enginefixcards[idtddc_enginefixcards].bonus := Json.AsDouble;
+
+                     if JSON.Key='iddoc' then
+                        dc_enginefixcards.tddc_enginefixcards[idtddc_enginefixcards].iddoc := Json.AsString;
+
+                   end;
+
+                   Json.Return;
+                end;
+                idtddc_enginefixcards := idtddc_enginefixcards + 1;
+             end;
+
+             Json.Return;
+          end;
+      end;
+
+    end;
+
+  finally
+    Json.Free;
+    Reader.Free;
+    TextReader.Free;
+  end;
+
+  result := true;
+
+end;
+
 
 Function JSONToTdc_enginedebit_moyka(AJson:String; var dc_enginedebit_moyka :Tdc_enginedebit_moyka):boolean;
 var
