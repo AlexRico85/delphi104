@@ -557,6 +557,16 @@ type
 
  TsalesBonusCardList = array of TsalesBonusCard;
 
+
+  TBirthdayCard = record
+    birthday: TDateTime;
+    codecard: string;
+    namePerson: string;
+    idCard:string;
+  end;
+
+ TBirthdayCardList = array of TBirthdayCard;
+
   const
     dirSecurityFiles:string = '\UpLoadSecurity';
     dirReceiptFiles:string = '\ReceiptFiles';

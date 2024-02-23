@@ -51,6 +51,7 @@ uses
   function PaymentMoykalistToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TPaymentMoykaList): string;
   function TsalesBonusCardToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCard): string;
   function TsalesBonusCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCardList): string;
+  function TBirthdayCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TBirthdayCardList): string;
   // JSON TO STRUCTURE
 
   Function JSONToTypeQuery(AJson:String):AnsiString;
@@ -2052,6 +2053,53 @@ begin
         .Add('quantityGoods',   Data[I].quantityGoods)
         .Add('sumGoods',        Data[I].sumGoods)
         .EndObject;
+
+      end;
+      arrayPair.EndArray;
+    end;
+
+    Pairs.EndObject;
+    result := StringBuilder.ToString;
+  finally
+    FreeAndNil(Writer);
+    FreeAndNil(StringWriter);
+    FreeAndNil(StringBuilder);
+    FreeAndNil(Builder);
+  end;
+end;
+
+function TBirthdayCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TBirthdayCardList): string;
+var
+  Writer: TJsonTextWriter;
+  StringWriter: TStringWriter;
+  StringBuilder: TStringBuilder;
+  Builder: TJSONObjectBuilder;
+  Pairs: TJSONObjectBuilder.TPairs;
+  arrayPair:TJSONObjectBuilder.TElements;
+  I:integer;
+begin
+  result := '';
+  StringBuilder := TStringBuilder.Create;
+  StringWriter := TStringWriter.Create(StringBuilder);
+  Writer := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting := TJsonFormatting.Indented;
+  Builder := TJSONObjectBuilder.Create(Writer);
+  try
+    Pairs:=Builder.BeginObject;
+    Pairs.Add('ErrorCode',ErrorCode);
+    Pairs.Add('Result', DescriptionError);
+    if Data<>nil then
+    begin
+      arrayPair := Pairs.BeginArray('Data');
+      for I := Low(Data) to High(Data) do
+      begin
+
+         arrayPair.BeginObject
+         .Add('birthday',      DateTimeToStr(Data[I].birthday))
+         .Add('namePerson',    Data[I].namePerson)
+         .Add('codecard',      Data[I].codecard)
+         .Add('idCard',       Data[I].idCard)
+         .EndObject;
 
       end;
       arrayPair.EndArray;

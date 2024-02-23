@@ -200,3 +200,16 @@ rf_persons_addinfo
 WHERE
 rf_persons_addinfo.ReWrite = 1
 //END
+
+//SQL GetBirthdayList
+SELECT
+persons.birthday as birthday,
+persons.idname as PersonName,
+cartlist.codcart as CodeCard,
+cartlist.idcode as idCard
+FROM
+persons
+INNER JOIN cartlist on cartlist.ownercart = persons.idcode
+WHERE
+DATE_FORMAT(persons.birthday ,'%m%d') =  DATE_FORMAT(CAST(:dateQuery AS DATE),'%m%d')
+//END

@@ -243,10 +243,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="js\base64.js" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="images\collapse.png" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64">
-                        <RemoteDir>.\js\</RemoteDir>
-                        <RemoteName>base64.js</RemoteName>
+                        <RemoteDir>.\images\</RemoteDir>
+                        <RemoteName>collapse.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -354,17 +354,17 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="css\main.css" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="OSX64">
-                        <RemoteDir>.\css\</RemoteDir>
-                        <RemoteName>main.css</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="js\serverfunctionexecutor.js" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="iOSSimulator">
                         <RemoteDir>.\js\</RemoteDir>
                         <RemoteName>serverfunctionexecutor.js</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="css\main.css" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="OSX64">
+                        <RemoteDir>.\css\</RemoteDir>
+                        <RemoteName>main.css</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -508,10 +508,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="js\callbackframework.js" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="OSX64">
+                <DeployFile LocalName="js\serverfunctions.js" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Android64">
                         <RemoteDir>.\js\</RemoteDir>
-                        <RemoteName>callbackframework.js</RemoteName>
+                        <RemoteName>serverfunctions.js</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -536,10 +536,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="js\serverfunctions.js" Configuration="Release" Class="ProjectFile">
-                    <Platform Name="Android64">
+                <DeployFile LocalName="js\callbackframework.js" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="OSX64">
                         <RemoteDir>.\js\</RemoteDir>
-                        <RemoteName>serverfunctions.js</RemoteName>
+                        <RemoteName>callbackframework.js</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -2130,10 +2130,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="images\collapse.png" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="js\base64.js" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64">
-                        <RemoteDir>.\images\</RemoteDir>
-                        <RemoteName>collapse.png</RemoteName>
+                        <RemoteDir>.\js\</RemoteDir>
+                        <RemoteName>base64.js</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

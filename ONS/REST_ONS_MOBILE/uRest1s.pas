@@ -74,6 +74,8 @@ type
 
     function updateGetChangesPersonsAddinfo(JsonText: String): TJSONObject;
 
+    function updateGetBirthdayList(JsonText: String): TJSONObject;
+
     constructor Create();
     Destructor Destroy;
   end;
@@ -1480,6 +1482,73 @@ begin
 
 end;
 
+Function Rest1s.updateGetBirthdayList(JsonText: String): TJSONObject;
+var
+  QueryBirthdayList: TFDQuery;
+  JSON:TJSONObject;
+  JSonValue:TJSONValue;
+
+  paramDateQuery : string;
+  N:integer;
+  BirthdayCardList:TBirthdayCardList;
+  resultText : string;
+begin
+
+  Connect;
+  QueryBirthdayList := TFDQuery.Create(nil);
+  QueryBirthdayList.Connection :=  FDConnection;
+  QueryBirthdayList.SQL.Text := SqlList['GetBirthdayList'];
+
+  JSON:=TJSONObject.ParseJSONValue(JsonText, False, True) as TJSONObject;
+  try
+      JSonValue := Json.FindValue('datequery');
+      if JSonValue = nil then
+      begin
+        Raise Exception.Create('Не верные параметры запроса');
+      end;
+      paramDateQuery := JSonValue.Value;
+
+      QueryBirthdayList.Active := False;
+      QueryBirthdayList.Params[0].Value := paramDateQuery;
+      try
+        QueryBirthdayList.Open;
+      except
+        Raise Exception.Create('Ошибка выполнения запроса');
+      end;
+
+      QueryBirthdayList.Last;
+
+      N:=0;
+      SetLength(BirthdayCardList, QueryBirthdayList.RecordCount);
+      QueryBirthdayList.First;
+      while not QueryBirthdayList.Eof do
+      begin
+        with QueryBirthdayList do
+        begin
+            BirthdayCardList[N].birthday       := FieldByName('birthday').AsDateTime;
+            BirthdayCardList[N].namePerson     := FieldByName('PersonName').AsString;
+            BirthdayCardList[N].codecard       := FieldByName('CodeCard').AsString;
+            BirthdayCardList[N].idCard         := FieldByName('idCard').AsString;
+
+
+        end;
+
+        QueryBirthdayList.Next;
+
+        N:=N+1;
+      end;
+
+
+  finally
+     FreeAndNil(QueryBirthdayList);
+     FreeAndNil(JSON);
+     DisConnect;
+  end;
+
+  resultText := TBirthdayCardListToJSON(0, 'ОК', BirthdayCardList);
+  Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
+
+end;
 
 
 Procedure Rest1s.Connect();
