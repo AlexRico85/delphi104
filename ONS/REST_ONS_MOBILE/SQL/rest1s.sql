@@ -213,3 +213,32 @@ INNER JOIN cartlist on cartlist.ownercart = persons.idcode
 WHERE
 DATE_FORMAT(persons.birthday ,'%m%d') =  DATE_FORMAT(CAST(:dateQuery AS DATE),'%m%d')
 //END
+
+//SQL GetEngineFixCards_toWrite
+SELECT
+dc_enginefixcards.id as idRecord,
+dc_enginefixcards.idcode,
+dc_enginefixcards.iddate,
+dc_enginefixcards.guid,
+dc_enginefixcards.`comment`,
+dc_enginefixcards.`engine`,
+dc_enginefixcards.datecreate
+FROM
+dc_enginefixcards
+WHERE
+dc_enginefixcards.towrite = 0
+//END
+
+//SQL GetRn_CardsNakp_ByGuiddoc
+SELECT
+rn_cardsnakp.id,
+rn_cardsnakp.cart,
+rn_cardsnakp.sum,
+rn_cardsnakp.guiddoc,
+rn_cardsnakp.date,
+rn_cardsnakp.actionextcode
+FROM
+rn_cardsnakp
+WHERE
+rn_cardsnakp.guiddoc = :paramGuiddoc
+//END

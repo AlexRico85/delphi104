@@ -25,6 +25,7 @@ Function UpdateMySQL_YandexPurchaseAnswer(YandexPurchaseAnswer: TYandexPurchaseA
 Function WriteToMySQL_dc_enginefixcards_moyka(dc_enginefixcards_moyka: Tdc_enginefixcards_moyka; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function WriteToMySQL_dc_enginefixcards(dc_enginefixcards: Tdc_enginefixcards; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 Function WriteToMySQL_dc_enginedebit_moyka(dc_enginedebit_moyka: Tdc_enginedebit_moyka; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+Function UpdateMySQL_EnginefixcardsAnswer(EnginefixcardsAnswer: TEnginefixcardsAnswer; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
 
 implementation
 
@@ -1839,6 +1840,74 @@ begin
    result := true;
 
 end;
+
+
+Function UpdateMySQL_EnginefixcardsAnswer(EnginefixcardsAnswer: TEnginefixcardsAnswer; var ErrorDescription: AnsiString; var ADOMySQLConnection: TFDConnection): boolean;
+var
+  ADOQuerySend: TFDQuery;
+  res: string;
+
+begin
+
+  ADOQuerySend := TFDQuery.Create(nil);
+  ADOQuerySend.Connection := ADOMySQLConnection;
+
+  try
+
+    ADOQuerySend.SQL.Text := 'SELECT * FROM dc_enginefixcards WHERE id=''' + EnginefixcardsAnswer.idrecord + ''' ';
+
+    try
+      ADOQuerySend.Open;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+    if ADOQuerySend.RecordCount = 0 then
+    begin
+      ErrorDescription := 'idrecord '+ EnginefixcardsAnswer.idrecord + ' not fount';
+      result := false;
+      exit;
+    end
+    else
+    begin
+      ADOQuerySend.SQL.Text := 'update dc_enginefixcards set ' +
+      // towrite
+        '`towrite` = ' + IntToStr(EnginefixcardsAnswer.toWrite) + ', ' +
+     // idcode
+        '`idcode` = ''' + EnginefixcardsAnswer.idcode + ''', ' +
+      // iddate
+        '`iddate` = ''' + EnginefixcardsAnswer.iddate + ''' ' +
+      // WHERE
+        ' WHERE id  = ''' + EnginefixcardsAnswer.idrecord + ''' ';
+
+    end;
+
+    try
+      ADOQuerySend.ExecSQL;
+      result := true;
+    except
+      on E: Exception do
+      begin
+        result := false;
+        ErrorDescription := E.Message;
+        exit;
+      end;
+    end;
+
+  finally
+    ADOQuerySend.Free;
+  end;
+
+
+
+end;
+
+
 
 
 end.

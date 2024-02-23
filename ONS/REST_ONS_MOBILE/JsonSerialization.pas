@@ -52,6 +52,7 @@ uses
   function TsalesBonusCardToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCard): string;
   function TsalesBonusCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TsalesBonusCardList): string;
   function TBirthdayCardListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:TBirthdayCardList): string;
+  function Tdc_EngineFixCardsListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:Tdc_EngineFixCardsList): string;
   // JSON TO STRUCTURE
 
   Function JSONToTypeQuery(AJson:String):AnsiString;
@@ -68,6 +69,7 @@ uses
   Function JSONToTdc_enginedebit_moyka(AJson:String; var dc_enginedebit_moyka :Tdc_enginedebit_moyka):boolean;
   Function JSONToTInfoGoods(AJson:String; var infoGoods :TInfoGoods):boolean;
   Function JSONToTInfoGroupGoods(AJson:String; var infoGroupGoods :TInfoGroupGoods):boolean;
+  Function JSONToTEnginefixcardsAnswer(AJson:String; var EnginefixcardsAnswer :TEnginefixcardsAnswer):boolean;
 
 
 
@@ -2209,6 +2211,71 @@ begin
   end;
 end;
 
+function Tdc_EngineFixCardsListToJSON(ErrorCode: Integer; DescriptionError:AnsiString; Data:Tdc_EngineFixCardsList): string;
+var
+  Writer: TJsonTextWriter;
+  StringWriter: TStringWriter;
+  StringBuilder: TStringBuilder;
+  Builder: TJSONObjectBuilder;
+  Pairs, DocumentHeader: TJSONObjectBuilder.TPairs;
+  arrayPair:TJSONObjectBuilder.TElements;
+  DocumentTable:TJSONObjectBuilder.TElements;
+  I:integer;
+  J: Integer;
+begin
+  result := '';
+  StringBuilder := TStringBuilder.Create;
+  StringWriter := TStringWriter.Create(StringBuilder);
+  Writer := TJsonTextWriter.Create(StringWriter);
+  Writer.Formatting := TJsonFormatting.Indented;
+  Builder := TJSONObjectBuilder.Create(Writer);
+  try
+    Pairs:=Builder.BeginObject;
+    Pairs.Add('ErrorCode',ErrorCode);
+    Pairs.Add('Result', DescriptionError);
+    if Data<>nil then
+    begin
+      arrayPair := Pairs.BeginArray('Data');
+      for I := Low(Data) to High(Data) do
+      begin
+
+           DocumentHeader := arrayPair.BeginObject
+                             .Add('Registr',      BoolToIntSTR(Data[I].Registr))
+                             .Add('guiddoc',      Data[I].guiddoc)
+                             .Add('idrecord',     Data[I].idrecord)
+                             .Add('idcode',       Data[I].idcode)
+                             .Add('iddate',       Data[I].iddate)
+                             .Add('datecreate',   Data[I].datecreate)
+                             .Add('comment',      Data[I].comment)
+                             .Add('count_tddc_enginefixcards',      Data[I].count_tddc_enginefixcards);
+
+           DocumentTable :=  DocumentHeader.BeginArray('tddc_enginefixcards');
+           for J := Low(Data[I].tddc_enginefixcards) to High(Data[I].tddc_enginefixcards) do
+           begin
+               DocumentTable.BeginObject
+                            .Add('guiddoc', Data[I].tddc_enginefixcards[J].guiddoc)
+                            .Add('guiddocInteger', '')
+                            .Add('card', Data[I].tddc_enginefixcards[J].card)
+                            .Add('bonus', Data[I].tddc_enginefixcards[J].bonus)
+                            .EndObject;
+           end;
+           DocumentTable.EndArray;
+
+          DocumentHeader.EndObject;
+      end;
+      arrayPair.EndArray;
+    end;
+
+    Pairs.EndObject;
+    result := StringBuilder.ToString;
+  finally
+    FreeAndNil(Writer);
+    FreeAndNil(StringWriter);
+    FreeAndNil(StringBuilder);
+    FreeAndNil(Builder);
+  end;
+end;
+
 Function JSONToTInfoGoods(AJson:String; var infoGoods :TInfoGoods):boolean;
 var
   Json: TJSONIterator;
@@ -2301,6 +2368,43 @@ begin
 
        if JSON.Key='guid' then
           infoGroupGoods.guid := Json.AsInteger;
+
+    end;
+
+  finally
+    Json.Free;
+    Reader.Free;
+    TextReader.Free;
+  end;
+
+  result := true;
+end;
+
+Function JSONToTEnginefixcardsAnswer(AJson:String; var EnginefixcardsAnswer :TEnginefixcardsAnswer):boolean;
+var
+  Json: TJSONIterator;
+  TextReader: TStringReader;
+  Reader: TJsonTextReader;
+begin
+
+  TextReader:=TStringReader.Create(AJson);
+  Reader:=TJsonTextReader.Create(TextReader);
+  Json:=TJSONIterator.Create(Reader);
+
+  try
+    while JSON.Next do
+    begin
+       if JSON.Key='towrite' then
+         EnginefixcardsAnswer.toWrite := Json.AsInteger;
+
+       if JSON.Key='idrecord' then
+         EnginefixcardsAnswer.idrecord  := Json.AsString;
+
+       if JSON.Key='idcode' then
+         EnginefixcardsAnswer.idcode  := Json.AsString;
+
+       if JSON.Key='iddate' then
+         EnginefixcardsAnswer.iddate  := Json.AsString;
 
     end;
 

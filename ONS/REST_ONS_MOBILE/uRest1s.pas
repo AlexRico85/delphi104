@@ -79,6 +79,11 @@ type
 
     function updateGetBirthdayList(JsonText: String): TJSONObject;
 
+    function GetEngineFixCards_toWrite(JsonText: String): TJSONObject;
+    function updateGetEngineFixCards_toWrite(JsonText: String): TJSONObject;
+
+    function updateWrite_EngineFixCardsAnswer(JsonText: String): TJSONObject;
+
     constructor Create();
     Destructor Destroy;
   end;
@@ -159,6 +164,10 @@ begin
   Result := DescriptionErrorToJSON(2, 'use POST query');
 end;
 
+function Rest1s.GetEngineFixCards_toWrite(JsonText: String): TJSONObject;
+begin
+   Result := DescriptionErrorToJSON(2, 'use POST query');
+end;
 
 
 
@@ -1401,6 +1410,8 @@ begin
 
 end;
 
+
+
 function Rest1s.updateGetChangesPersonsAddinfo(JsonText: String): TJSONObject;
 var
   QueryGetChangesPersonsAddinfo: TFDQuery;
@@ -1591,6 +1602,159 @@ begin
 
   resultText := TBirthdayCardListToJSON(0, 'ОК', BirthdayCardList);
   Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
+
+end;
+
+
+function Rest1s.updateGetEngineFixCards_toWrite(JsonText: String): TJSONObject;
+ var
+  GetEngineFixCards_toWrite: TFDQuery;
+  GetRn_CardsNakp_ByGuiddoc:TFDQuery;
+  ErrorDescription: AnsiString;
+  N,Y:integer;
+  resultText : string;
+
+  dc_EngineFixCardsList:Tdc_enginefixcardsList;
+begin
+
+  Connect;
+  ErrorDescription := '';
+
+  GetEngineFixCards_toWrite:= TFDQuery.Create(nil);
+  GetEngineFixCards_toWrite.Connection :=  FDConnection;
+  GetEngineFixCards_toWrite.SQL.Text := SqlList['GetEngineFixCards_toWrite'];
+
+  GetRn_CardsNakp_ByGuiddoc:= TFDQuery.Create(nil);
+  GetRn_CardsNakp_ByGuiddoc.Connection :=  FDConnection;
+  GetRn_CardsNakp_ByGuiddoc.SQL.Text := SqlList['GetRn_CardsNakp_ByGuiddoc'];
+
+
+
+  try
+
+    GetEngineFixCards_toWrite.Active := False;
+
+    try
+      GetEngineFixCards_toWrite.Open;
+    except
+      on E: Exception do
+      begin
+        Raise Exception.Create('Ошибка выполнения запроса');
+      end;
+    end;
+
+
+    GetEngineFixCards_toWrite.Last;
+    SetLength(dc_EngineFixCardsList, GetEngineFixCards_toWrite.RecordCount);
+    N:=0;
+
+    GetEngineFixCards_toWrite.First;
+
+     with GetEngineFixCards_toWrite do
+     begin
+        while not Eof do
+        begin
+          dc_EngineFixCardsList[N].idrecord              := FieldByName('idrecord').AsString;
+          dc_EngineFixCardsList[N].idcode                := FieldByName('idcode').AsString;
+          dc_EngineFixCardsList[N].iddate                := FieldByName('iddate').AsString;
+          dc_EngineFixCardsList[N].datecreate            := FieldByName('datecreate').AsString;
+          dc_EngineFixCardsList[N].comment               := FieldByName('comment').AsString;
+          dc_EngineFixCardsList[N].guiddoc               := FieldByName('guid').AsString;
+          if FieldByName('engine').AsInteger = 1 then
+            dc_EngineFixCardsList[N].Registr := true else dc_EngineFixCardsList[N].Registr := false;
+
+          GetRn_CardsNakp_ByGuiddoc.Active := False;
+          GetRn_CardsNakp_ByGuiddoc.Params[0].Value := FieldByName('guid').AsString;
+
+          try
+            GetRn_CardsNakp_ByGuiddoc.Open;
+          except
+            on E: Exception do
+            begin
+              Raise Exception.Create('Ошибка выполнения запроса');
+            end;
+          end;
+
+          GetRn_CardsNakp_ByGuiddoc.Last;
+
+          dc_EngineFixCardsList[N].count_tddc_enginefixcards :=  GetRn_CardsNakp_ByGuiddoc.RecordCount;
+          SetLength(dc_EngineFixCardsList[N].tddc_enginefixcards, GetRn_CardsNakp_ByGuiddoc.RecordCount);
+
+          GetRn_CardsNakp_ByGuiddoc.First;
+          Y:=0;
+          while not GetRn_CardsNakp_ByGuiddoc.Eof do
+          begin
+            dc_EngineFixCardsList[N].tddc_enginefixcards[Y].guiddoc := dc_EngineFixCardsList[N].guiddoc;
+            dc_EngineFixCardsList[N].tddc_enginefixcards[Y].iddoc   := dc_EngineFixCardsList[N].idcode;
+            dc_EngineFixCardsList[N].tddc_enginefixcards[Y].card    := GetRn_CardsNakp_ByGuiddoc.FieldByName('cart').AsString;
+            dc_EngineFixCardsList[N].tddc_enginefixcards[Y].bonus   := GetRn_CardsNakp_ByGuiddoc.FieldByName('sum').AsFloat;
+            dc_EngineFixCardsList[N].tddc_enginefixcards[Y].dateOf  := GetRn_CardsNakp_ByGuiddoc.FieldByName('date').AsString;
+
+
+            GetRn_CardsNakp_ByGuiddoc.Next;
+            Y:=Y+1;
+          end;
+
+
+
+          Next;
+          N:=N+1;
+        end;
+     end;
+
+  finally
+
+    FreeAndNil(GetEngineFixCards_toWrite);
+    FreeAndNil(GetRn_CardsNakp_ByGuiddoc);
+
+    DisConnect;
+  end;
+
+  try
+   resultText := Tdc_EngineFixCardsListToJSON(0, 'ОК', dc_EngineFixCardsList);
+   Result := TJSONObject.ParseJSONValue(resultText, False, True) as TJSONObject;
+  finally
+    for N := Low(dc_EngineFixCardsList) to High(dc_EngineFixCardsList) do
+    begin
+       SetLength(dc_EngineFixCardsList[N].tddc_enginefixcards, 0);
+    end;
+    SetLength(dc_EngineFixCardsList, 0);
+
+  end;
+
+end;
+
+
+function Rest1s.updateWrite_EngineFixCardsAnswer(JsonText: String): TJSONObject;
+var
+  EnginefixcardsAnswer: TEnginefixcardsAnswer;
+  ErrorDescription: AnsiString;
+begin
+
+  Connect;
+  try
+    if JSONToTEnginefixcardsAnswer(JsonText, EnginefixcardsAnswer) then
+    begin
+       if UpdateMySQL_EnginefixcardsAnswer(EnginefixcardsAnswer, ErrorDescription, FDConnection) then
+       begin
+           Result := ResultOkToJSON();
+       end
+       else
+       begin
+          Raise Exception.Create(ErrorDescription);
+       end;
+
+    end else
+
+    begin
+
+      Raise Exception.Create('Ошибка чтения контекста');
+
+    end;
+
+  finally
+    DisConnect;
+  end;
 
 end;
 

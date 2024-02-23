@@ -381,14 +381,24 @@ type
     Registr   :Boolean;
     guiddoc   :string;
     guiddocInteger :string;
-    uniid:string;
+    idrecord   :string;
     idcode    :string;
     iddate    :string;
+    datecreate:string;
     comment   :AnsiString;
 
     count_tddc_enginefixcards : Integer;
     tddc_enginefixcards :Ttddc_enginefixcards;
 
+  end;
+
+  Tdc_enginefixcardsList = array of Tdc_enginefixcards;
+
+  TEnginefixcardsAnswer = record
+    toWrite:integer;
+    idrecord   :string;
+    idcode    :string;
+    iddate    :string;
   end;
 
   // пюгнбне мювхякемхе анмсянб лнийю
